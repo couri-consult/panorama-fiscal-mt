@@ -11,18 +11,23 @@
 <style>
 @import url('./styles/tokens.css');
 :root{
-  /* Verde-Brasil (bandeira do MT) */
-  --g800:#00451E;--g700:#006B33;--g600:#009C3B;--g500:#009C3B;--g300:#2BB65D;--g200:#7DD498;--g100:#E2F4E9;
-  /* Semânticas */
-  --red:#D62828;--amber:#E59500;--blue:#002776;
+  /* Bandeira do Mato Grosso — proporções: ~50% azul / ~30% amarelo / ~20% verde */
+  /* Azul-bandeira (dominante) #003399 + variações */
+  --g800:#002266;--g700:#003399;--g600:#2D5BB8;--g500:#2D5BB8;--g300:#5B82CC;--g200:#B8C8E5;--g100:#E6ECF7;
+  /* Amarelo-bandeira (acento) #FFDF00 + escurecido p/ texto */
+  --yellow:#FFDF00;--yellow-dark:#BFA600;
+  /* Verde-bandeira (moldura / positivos) #009C3B */
+  --green:#009C3B;--green-dark:#00702A;
+  /* Semânticas — vermelho p/ negativo, mostarda p/ atenção (não confunde com amarelo da bandeira) */
+  --red:#D62828;--amber:#E59500;--blue:#003399;
   /* Neutros */
-  --lgray:#5F7468;--muted:#5F7468;
+  --lgray:#5B6B85;--muted:#5B6B85;
   /* Superfícies */
-  --bg:#F4F8F2;--card:#FFFFFF;--border:#E5EFE0;--text:#00451E;
+  --bg:#F3F6FB;--card:#FFFFFF;--border:#E1E8F2;--text:#002266;
   /* Tipografia */
   --font-title:'Poppins',sans-serif;--font-body:'Inter',sans-serif;
   /* Forma */
-  --radius:14px;--shadow:0 1px 3px rgba(0,69,30,0.06),0 1px 2px rgba(0,69,30,0.04);
+  --radius:14px;--shadow:0 1px 3px rgba(0,34,102,0.06),0 1px 2px rgba(0,34,102,0.04);
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:var(--font-body);background:var(--color-surface-alt);color:var(--color-text-on-light);font-size:15px;line-height:1.6;}

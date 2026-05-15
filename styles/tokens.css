@@ -1,61 +1,61 @@
 /* ============================================================
    tokens.css — Identidade Visual
    Panorama Fiscal de Mato Grosso
-   Paleta inspirada na bandeira do estado:
-     verde-Brasil (#009C3B), amarelo (#FEDF00), azul (#002776)
+
+   Paleta inspirada na bandeira do estado, respeitando proporções:
+     ~50% AZUL (campo central):  #003399
+     ~30% AMARELO (losango):     #FFDF00
+     ~20% VERDE (moldura):       #009C3B
+                BRANCO (estrelas): #FFFFFF
    ============================================================ */
 
-/* Google Fonts — carregue no HTML se ainda não estiver presente:
-   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-*/
-
 :root {
-  /* ===== PALETA PRIMÁRIA (verde-Brasil da bandeira do MT) ===== */
-  --color-bg-deep:        #00451E;  /* Verde profundo — fundo hero, sidebar */
-  --color-bg-mid:         #006B33;  /* Verde escuro — gradiente intermediário */
-  --color-bg-soft:        #009C3B;  /* Verde-Brasil (bandeira) — hover, bordas ativas */
+  /* ===== PALETA PRIMÁRIA (AZUL — campo central da bandeira) ===== */
+  --color-bg-deep:        #002266;  /* Azul profundo — fundo hero, sidebar */
+  --color-bg-mid:         #003399;  /* Azul-bandeira — gradiente intermediário */
+  --color-bg-soft:        #2D5BB8;  /* Azul médio — hover, bordas ativas */
 
-  /* ===== ACENTO (amarelo da bandeira) ===== */
-  --color-accent:         #FEDF00;  /* Amarelo bandeira — assinatura visual */
-  --color-accent-hover:   #FFE733;  /* Hover do acento */
-  --color-accent-dark:    #BFA500;  /* Acento sobre fundo claro (texto/badges) */
+  /* ===== ACENTO (AMARELO — losango da bandeira) ===== */
+  --color-accent:         #FFDF00;  /* Amarelo-bandeira — assinatura visual, badges, hover */
+  --color-accent-hover:   #FFE933;  /* Hover do acento */
+  --color-accent-dark:    #BFA600;  /* Amarelo escurecido — texto sobre fundo claro */
 
-  /* ===== AZUL TERCIÁRIO (azul da bandeira) ===== */
-  --color-info:           #002776;  /* Azul bandeira — informativo */
-  --color-info-hover:     #003B9F;
-  --color-info-soft:      #1A4FA0;
+  /* ===== VERDE (MOLDURA — papel secundário, positivos) ===== */
+  --color-frame:          #009C3B;  /* Verde-bandeira — moldura, indicadores positivos */
+  --color-frame-dark:     #00702A;
+  --color-frame-soft:     #2BB65D;
 
   /* ===== NEUTROS ===== */
-  --color-surface:        #FFFFFF;  /* Cards, modais */
-  --color-surface-alt:    #F4F8F2;  /* Background da página (off-white esverdeado leve) */
-  --color-surface-deep:   #E5EFE0;  /* Bordas sutis, separadores */
+  --color-surface:        #FFFFFF;
+  --color-surface-alt:    #F3F6FB;  /* Off-white com leve viés azul (sutil) */
+  --color-surface-deep:   #E1E8F2;  /* Bordas sutis */
   --color-text-on-dark:   #FFFFFF;
-  --color-text-on-light:  #00451E;  /* Texto principal (mesmo verde do bg) */
-  --color-text-muted:     #5F7468;  /* Labels, captions */
-  --color-text-subtle:    #93A399;  /* Texto auxiliar */
-  --color-border:         rgba(0, 69, 30, 0.10);
-  --color-border-strong:  rgba(0, 69, 30, 0.18);
+  --color-text-on-light:  #002266;  /* Texto principal (mesmo tom do bg-deep) */
+  --color-text-muted:     #5B6B85;  /* Labels, captions (azul acinzentado) */
+  --color-text-subtle:    #8B97AC;
+  --color-border:         rgba(0, 34, 102, 0.10);
+  --color-border-strong:  rgba(0, 34, 102, 0.18);
 
   /* ===== SEMÂNTICAS (FISCAL) ===== */
-  --color-positive:       #009C3B;  /* Superávit, melhora — verde-Brasil */
+  --color-positive:       #009C3B;  /* Superávit, melhora — verde da bandeira */
   --color-positive-bg:    rgba(0, 156, 59, 0.12);
-  --color-negative:       #D62828;  /* Déficit, piora — vermelho institucional */
+  --color-negative:       #D62828;
   --color-negative-bg:    rgba(214, 40, 40, 0.10);
-  --color-warning:        #E59500;  /* Atenção (mais terroso que o amarelo da bandeira) */
+  --color-warning:        #E59500;  /* Mostarda — terroso pra não conflitar com o amarelo da bandeira */
   --color-warning-bg:     rgba(229, 149, 0, 0.12);
-  --color-neutral:        #5F7468;
-  --color-neutral-bg:     rgba(95, 116, 104, 0.12);
+  --color-neutral:        #5B6B85;
+  --color-neutral-bg:     rgba(91, 107, 133, 0.12);
 
   /* ===== PALETA PARA GRÁFICOS (categórica) =====
-     Usa o trio da bandeira: verde / amarelo / azul + neutros para profundidade. */
-  --chart-1:              #009C3B;  /* Verde-Brasil (primário) */
-  --chart-2:              #FEDF00;  /* Amarelo bandeira (acento) */
-  --chart-3:              #002776;  /* Azul bandeira */
-  --chart-4:              #00451E;  /* Verde profundo */
+     Trio da bandeira (azul/amarelo/verde) + apoios neutros para muitas séries. */
+  --chart-1:              #003399;  /* Azul-bandeira (primário) */
+  --chart-2:              #FFDF00;  /* Amarelo-bandeira (acento) */
+  --chart-3:              #009C3B;  /* Verde-bandeira */
+  --chart-4:              #2D5BB8;  /* Azul médio */
   --chart-5:              #D62828;  /* Vermelho semântico */
-  --chart-6:              #5F7468;  /* Cinza-esverdeado */
+  --chart-6:              #5B6B85;  /* Azul acinzentado */
   --chart-7:              #2BB65D;  /* Verde claro */
-  --chart-8:              #BFA500;  /* Mostarda (amarelo escurecido) */
+  --chart-8:              #BFA600;  /* Mostarda */
 
   /* ===== TIPOGRAFIA ===== */
   --font-display: 'Playfair Display', 'Bodoni Moda', Georgia, serif;
@@ -91,19 +91,19 @@
   --radius-sm:    6px;
 
   /* ===== SOMBRAS ===== */
-  --shadow-sm:    0 1px 2px rgba(0, 69, 30, 0.06);
-  --shadow-soft:  0 4px 12px rgba(0, 69, 30, 0.08);
-  --shadow-card:  0 2px 8px rgba(0, 69, 30, 0.06), 0 1px 2px rgba(0, 69, 30, 0.04);
-  --shadow-hover: 0 8px 20px rgba(0, 69, 30, 0.15);
-  --shadow-pill-accent: 0 2px 8px rgba(254, 223, 0, 0.35);
+  --shadow-sm:    0 1px 2px rgba(0, 34, 102, 0.06);
+  --shadow-soft:  0 4px 12px rgba(0, 34, 102, 0.08);
+  --shadow-card:  0 2px 8px rgba(0, 34, 102, 0.06), 0 1px 2px rgba(0, 34, 102, 0.04);
+  --shadow-hover: 0 8px 20px rgba(0, 34, 102, 0.15);
+  --shadow-pill-accent: 0 2px 8px rgba(255, 223, 0, 0.45);
 
   /* ===== GRADIENTES =====
-     Hero usa verde profundo → verde-Brasil → toque sutil de amarelo (sun glow). */
-  --gradient-hero:    linear-gradient(135deg, #00451E 0%, #006B33 45%, #009C3B 100%);
-  --gradient-card-dark: linear-gradient(135deg, #00451E 0%, #006B33 100%);
-  --gradient-divider: linear-gradient(to right, var(--color-bg-soft), transparent);
+     Hero: azul profundo → azul-bandeira → verde da moldura no canto inferior. */
+  --gradient-hero:    linear-gradient(135deg, #002266 0%, #003399 60%, #00702A 100%);
+  --gradient-card-dark: linear-gradient(135deg, #002266 0%, #003399 100%);
+  --gradient-divider: linear-gradient(to right, var(--color-accent), transparent);
 
-  /* ===== PADRÃO DECORATIVO (Cruzeiro do Sul estilizado, alusão à bandeira) ===== */
+  /* ===== PADRÃO DECORATIVO — Cruzeiro do Sul estilizado (estrelas brancas) ===== */
   --pattern-foliage: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'><g fill='%23ffffff' opacity='1'><circle cx='40' cy='15' r='2'/><circle cx='20' cy='35' r='2.5'/><circle cx='60' cy='35' r='2.5'/><circle cx='35' cy='50' r='2'/><circle cx='45' cy='65' r='1.8'/></g></svg>");
 
   /* ===== TRANSIÇÕES ===== */
