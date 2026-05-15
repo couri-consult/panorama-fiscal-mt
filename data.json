@@ -1,14 +1,14 @@
 {
   "_meta": {
     "uf": "MT",
-    "updated_at": "2026-05-15T08:47:28",
+    "updated_at": "2026-05-15T15:12:58",
     "rreo_current_period": "2026/1",
     "rreo_closed_period": "2025/6",
     "rgf_period": "2025/3",
     "populacao_year": 2024,
     "populacao_mt": 3836399,
     "capag_nota_consolidada": "A+",
-    "clp_pos_geral": "1º (Solvência Fiscal)",
+    "clp_pos_geral": "3º (↓1 vs 2024)",
     "raw_siconfi": {
       "rreo_current": {
         "orcamento_total_dotacao": 40792580503,
@@ -35,9 +35,9 @@
       "kpis": "manual",
       "capag": "csv-local+manual(obs)",
       "pessoal": "manual",
+      "investimentos": "manual",
       "clp_ranking": "manual",
       "clp_meta": "manual",
-      "investimentos": "manual",
       "capag_historico": "csv-local",
       "kpi.orcamento_df": "siconfi-rreo-atual",
       "kpi.investimento_rcl": "siconfi-rreo+rgf",
@@ -386,28 +386,48 @@
   "clp_ranking": [
     {
       "indicador": "Taxa de Investimentos",
-      "posicao": 3,
+      "posicao": 5,
       "conceito": "Investimento liquidado dividido pela receita corrente líquida."
-    },
-    {
-      "indicador": "Sucesso Planejamento Orçamentário",
-      "posicao": "ND",
-      "conceito": "Despesa liquidada pela despesa total atualizada (dotação orçamentária)."
-    },
-    {
-      "indicador": "Resultado Primário",
-      "posicao": "ND",
-      "conceito": "Diferença entre receita primária realizada e despesa primária empenhada no ano, dividida pelo PIB nominal do estado."
-    },
-    {
-      "indicador": "Índice de Liquidez",
-      "posicao": "ND",
-      "conceito": "Obrigações financeiras divididas pelo caixa bruto. Quanto maior o indicador, pior."
     },
     {
       "indicador": "Regra de Ouro",
       "posicao": 2,
       "conceito": "Diferença entre despesas de capital empenhadas e receita de operações de crédito, dividida pela receita corrente líquida."
+    },
+    {
+      "indicador": "Solvência Fiscal",
+      "posicao": 1,
+      "conceito": "Mede a relação entre dívida pública e receita corrente líquida ajustada — quanto menor, melhor. MT lidera o ranking nacional neste indicador."
+    },
+    {
+      "indicador": "Sucesso do Planejamento Orçamentário",
+      "posicao": 20,
+      "conceito": "Despesa liquidada dividida pela despesa total atualizada (dotação orçamentária)."
+    },
+    {
+      "indicador": "Dependência Fiscal",
+      "posicao": 7,
+      "conceito": "Mede o quanto o ente depende de transferências para sustentar suas despesas correntes."
+    },
+    {
+      "indicador": "Resultado Primário",
+      "posicao": 25,
+      "conceito": "Diferença entre receita primária realizada e despesa primária empenhada no ano, dividida pelo PIB nominal do estado."
+    },
+    {
+      "indicador": "Gasto com Pessoal",
+      "posicao": 10,
+      "conceito": "Despesa total com pessoal sobre a Receita Corrente Líquida (cumprimento da LRF)."
+    },
+    {
+      "indicador": "Índice de Liquidez",
+      "posicao": "ND",
+      "conceito": "Obrigações financeiras divididas pelo caixa bruto. Quanto maior o indicador, pior. Valor não visível no print de origem — preencher manualmente."
+    },
+    {
+      "indicador": "Poupança Corrente",
+      "posicao": "ND",
+      "conceito": "Despesas correntes sobre receitas correntes — quanto maior, menos margem para investir. Valor não visível no print de origem — preencher manualmente."
     }
   ]
 }
