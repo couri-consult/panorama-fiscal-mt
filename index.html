@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panorama Fiscal de Mato Grosso</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+@import url('./styles/tokens.css');
+:root{
+  /* Verde-Brasil (bandeira do MT) */
+  --g800:#00451E;--g700:#006B33;--g600:#009C3B;--g500:#009C3B;--g300:#2BB65D;--g200:#7DD498;--g100:#E2F4E9;
+  /* Semânticas */
+  --red:#D62828;--amber:#E59500;--blue:#002776;
+  /* Neutros */
+  --lgray:#5F7468;--muted:#5F7468;
+  /* Superfícies */
+  --bg:#F4F8F2;--card:#FFFFFF;--border:#E5EFE0;--text:#00451E;
+  /* Tipografia */
+  --font-title:'Poppins',sans-serif;--font-body:'Inter',sans-serif;
+  /* Forma */
+  --radius:14px;--shadow:0 1px 3px rgba(0,69,30,0.06),0 1px 2px rgba(0,69,30,0.04);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--font-body);background:var(--color-surface-alt);color:var(--color-text-on-light);font-size:15px;line-height:1.6;}
+.header{background:var(--gradient-hero);padding:28px 32px 22px;position:relative;overflow:hidden;}
+.header::before{content:'';position:absolute;inset:0;background-image:var(--pattern-foliage);opacity:0.06;pointer-events:none;}
+.header h1{font-size:var(--text-h1);font-weight:var(--weight-bold);color:var(--color-text-on-dark);font-family:var(--font-display);position:relative;}
+.header p{font-size:var(--text-small);color:rgba(255,255,255,0.78);margin-top:var(--space-1);position:relative;}
+nav{background:var(--color-surface);border-bottom:1px solid var(--color-border);padding:0 32px;display:flex;position:sticky;top:0;z-index:var(--z-header);overflow-x:auto;box-shadow:var(--shadow-sm);}
+nav a{display:block;padding:14px 16px;font-size:13px;font-weight:var(--weight-medium);color:var(--color-text-muted);text-decoration:none;border-bottom:3px solid transparent;white-space:nowrap;font-family:var(--font-body);transition:color var(--transition-fast),border-color var(--transition-fast);}
+nav a:hover{color:var(--color-bg-mid);border-color:var(--color-bg-soft);}
+nav a.active{color:var(--color-bg-deep);border-color:var(--color-accent);font-weight:var(--weight-semibold);}
+#loading{display:flex;flex-direction:column;align-items:center;justify-content:center;height:60vh;gap:16px;}
+.spinner{width:40px;height:40px;border:3px solid var(--color-surface-deep);border-top-color:var(--color-bg-mid);border-radius:50%;animation:spin .8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+#loading p{color:var(--color-text-muted);font-size:14px;}
+main{max-width:1100px;margin:0 auto;padding:36px 24px 64px;}
+.section{margin-bottom:56px;scroll-margin-top:56px;}
+.section-title{font-size:11px;font-weight:var(--weight-semibold);letter-spacing:.1em;text-transform:uppercase;color:var(--color-bg-mid);border-bottom:2px solid var(--color-border-strong);padding-bottom:var(--space-2);margin-bottom:22px;font-family:var(--font-body);}
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:14px;margin-bottom:10px;}
+.kpi{background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-card);padding:18px 16px 15px;border-top:3px solid var(--color-bg-soft);box-shadow:var(--shadow-card);transition:transform var(--transition-base),box-shadow var(--transition-base);}
+.kpi:hover{transform:translateY(-2px);box-shadow:var(--shadow-hover);}
+.kpi.red{border-top-color:var(--color-negative);}.kpi.amber{border-top-color:var(--color-warning);}.kpi.blue{border-top-color:var(--blue);}
+.kpi-val{font-size:20px;font-weight:var(--weight-bold);line-height:1.2;margin-bottom:var(--space-1);font-family:var(--font-mono);font-variant-numeric:tabular-nums;}
+.cv-green{color:var(--color-text-on-light);}.cv-red{color:var(--color-negative);}.cv-amber{color:var(--color-warning);}.cv-blue{color:var(--blue);}
+.kpi-label{font-size:var(--text-label);font-weight:var(--weight-semibold);color:var(--color-text-muted);margin-bottom:var(--space-1);letter-spacing:.02em;}
+.kpi-sub{font-size:var(--text-label);color:var(--color-text-subtle);}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start;}
+.three-col{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+@media(max-width:700px){.two-col,.three-col{grid-template-columns:1fr;}}
+.card{background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-card);padding:var(--space-5) var(--space-5);box-shadow:var(--shadow-card);}
+.card+.card{margin-top:18px;}
+.card-title{font-size:var(--text-label);font-weight:var(--weight-semibold);text-transform:uppercase;letter-spacing:.07em;color:var(--color-bg-mid);margin-bottom:var(--space-3);line-height:1.5;font-family:var(--font-body);}
+.two-col>.card>.card-title:first-child,.two-col>div>.card>.card-title:first-child{min-height:36px;display:flex;align-items:flex-start;}
+table{width:100%;border-collapse:collapse;font-size:13.5px;}
+th{background:var(--color-surface-alt);color:var(--color-text-muted);font-weight:var(--weight-semibold);font-size:var(--text-label);padding:var(--space-2) var(--space-3);text-align:left;border-bottom:1px solid var(--color-border-strong);text-transform:uppercase;letter-spacing:.08em;}
+td{padding:var(--space-2) var(--space-3);border-bottom:1px solid var(--color-border);}
+tr:last-child td{border-bottom:none;}
+tr.hl-red td{background:var(--color-negative-bg);}tr.hl-green td{background:var(--color-positive-bg);}tr.hl-amber td{background:var(--color-warning-bg);}
+.badge{display:inline-block;padding:var(--space-1) var(--space-3);border-radius:var(--radius-pill);font-weight:var(--weight-bold);font-size:13px;}
+.badge-green{background:var(--color-positive-bg);color:var(--color-accent-dark);}.badge-red{background:var(--color-negative-bg);color:var(--color-negative);}.badge-amber{background:var(--color-warning-bg);color:var(--color-warning);}
+.has-tip{cursor:help;border-bottom:1px dashed var(--color-bg-soft);position:relative;}
+.has-tip .tip{display:none;position:absolute;left:0;top:calc(100% + 6px);z-index:var(--z-tooltip);background:var(--color-bg-deep);color:var(--color-text-on-dark);font-size:12px;line-height:1.5;padding:10px 13px;border-radius:var(--radius-input);width:280px;pointer-events:none;box-shadow:var(--shadow-soft);}
+.has-tip .tip::before{content:'';position:absolute;top:-5px;left:12px;border:5px solid transparent;border-bottom-color:var(--color-bg-deep);border-top:0;}
+.has-tip:hover .tip{display:block;}
+ul.dl{list-style:none;padding:0;}
+ul.dl li{padding:5px 0 5px 20px;position:relative;font-size:13.5px;border-bottom:1px solid var(--color-border);}
+ul.dl li:last-child{border-bottom:none;}
+ul.dl li::before{content:'';position:absolute;left:4px;top:13px;width:7px;height:7px;border-radius:50%;background:var(--color-bg-mid);}
+ul.dl li.azul::before{background:var(--blue);}ul.dl li.amarelo::before{background:var(--color-warning);}
+.agenda-box{border-radius:var(--radius-card);padding:var(--space-5) var(--space-5);border:1.5px solid;box-shadow:var(--shadow-card);}
+.agenda-box h3{font-size:12px;font-weight:var(--weight-semibold);margin-bottom:var(--space-3);text-transform:uppercase;letter-spacing:.06em;font-family:var(--font-body);}
+.agenda-box ul{list-style:none;padding:0;}
+.agenda-box li{font-size:13.5px;padding:5px 0 5px 16px;position:relative;border-bottom:1px solid var(--color-border);}
+.agenda-box li:last-child{border-bottom:none;}
+.agenda-box li::before{content:'›';position:absolute;left:0;font-weight:var(--weight-bold);}
+.a-green{border-color:var(--color-bg-soft);background:var(--color-positive-bg);}.a-green h3,.a-green li::before{color:var(--color-bg-deep);}
+.a-blue{border-color:#5b9bd5;background:#f0f5fd;}.a-blue h3,.a-blue li::before{color:var(--blue);}
+.a-amber{border-color:var(--color-warning);background:var(--color-warning-bg);}.a-amber h3,.a-amber li::before{color:var(--color-bg-deep);}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(14,59,31,.45);z-index:var(--z-modal);align-items:center;justify-content:center;}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--color-surface);border-radius:var(--radius-card);padding:28px;max-width:540px;width:90%;position:relative;border-top:4px solid var(--color-warning);box-shadow:var(--shadow-hover);}
+.modal h3{font-size:var(--text-h3);font-weight:var(--weight-bold);color:var(--color-text-on-light);margin-bottom:var(--space-3);font-family:var(--font-display);}
+.modal p{font-size:13.5px;line-height:1.7;}
+.modal-close{position:absolute;top:14px;right:16px;background:none;border:none;font-size:20px;cursor:pointer;color:var(--color-text-muted);}
+.btn-legal{background:none;border:1.5px solid var(--color-warning);color:var(--color-warning);border-radius:var(--radius-input);padding:6px 14px;font-size:12.5px;font-weight:var(--weight-semibold);cursor:pointer;margin-bottom:var(--space-3);}
+.btn-legal:hover{background:var(--color-warning-bg);}
+footer{text-align:center;font-size:var(--text-label);color:var(--color-text-muted);padding:var(--space-6);border-top:1px solid var(--color-border);}
+.fonte{font-size:11px;color:var(--color-text-subtle);margin-top:var(--space-3);padding-top:var(--space-2);border-top:1px dashed var(--color-border);word-break:break-all;}
+.fonte a{color:var(--color-bg-mid);text-decoration:none;}
+.fonte a:hover{text-decoration:underline;color:var(--color-accent-dark);}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <h1>Panorama Fiscal de Mato Grosso</h1>
+  <p id="hdr-ref">Carregando dados...</p>
+</header>
+<nav>
+  <a href="#visao-geral" class="active">Visão Geral</a>
+  <a href="#investimento">Investimento</a>
+  <a href="#capag">CAPAG e Caixa</a>
+  <a href="#pessoal">Pessoal / LRF</a>
+</nav>
+
+<div id="loading"><div class="spinner"></div><p>Carregando dados...</p></div>
+
+<main id="main" style="display:none">
+  <section class="section" id="visao-geral">
+    <div class="section-title">Visão Geral</div>
+    <div class="kpi-grid" id="kpi-grid"></div>
+    <p style="font-size:12px;color:var(--color-text-muted);margin-top:6px;">Fontes: Siconfi/STN · Tesouro Nacional · CLP · SEFAZ-MT — <span id="foot-ref"></span></p>
+  </section>
+
+  <section class="section" id="investimento">
+    <div class="section-title">Investimento Público</div>
+    <div class="card">
+      <div class="card-title">Posição de Mato Grosso: <span id="inv-pos" style="color:var(--color-positive);font-weight:700;"></span></div>
+      <div id="inv-chart-wrap" style="position:relative;"><canvas id="chartInv" role="img" aria-label="Ranking de investimento/RCL por estado"></canvas></div>
+      <div class="fonte" id="fonte-investimentos">Fonte: Siconfi/Tesouro</div>
+    </div>
+  </section>
+
+  <section class="section" id="capag">
+    <div class="section-title">CAPAG e Disponibilidade de Caixa</div>
+    <div class="card">
+      <div class="card-title">CAPAG — Nota Consolidada: <span style="color:var(--color-negative);font-size:18px;font-weight:700;" id="capag-nota"></span></div>
+      <table id="capag-table"></table>
+      <div style="margin-top:18px;">
+        <div class="card-title" style="margin-bottom:10px;">Histórico consolidado</div>
+        <table id="capag-hist"></table>
+      </div>
+      <div class="fonte">Fonte: <a href="https://www.tesourotransparente.gov.br/temas/estados-e-municipios/capacidade-de-pagamento-capag" target="_blank" rel="noopener">tesourotransparente.gov.br/temas/estados-e-municipios/capacidade-de-pagamento-capag</a></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Disponibilidade de caixa (R$ bi)</div>
+      <div style="position:relative;height:200px;"><canvas id="chartCaixa" role="img" aria-label="Evolução da disponibilidade de caixa do DF"></canvas></div>
+      <div style="display:flex;gap:16px;margin-top:8px;font-size:11.5px;color:var(--color-text-muted);">
+        <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--color-bg-soft);margin-right:4px;"></span>Caixa líquido</span>
+        <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--color-negative);margin-right:4px;"></span>Rec. não vinculados</span>
+      </div>
+      <div class="fonte" id="fonte-caixa">Fonte: Siconfi/Tesouro</div>
+    </div>
+  </section>
+
+  <section class="section" id="pessoal">
+    <div class="section-title">Despesa com Pessoal / LRF e Ranking de Competitividade</div>
+    <div class="two-col">
+      <div class="card">
+        <div class="card-title">Poder Executivo — % da RCL</div>
+        <table id="pessoal-table"></table>
+        <div class="fonte" id="fonte-pessoal">Fonte: Siconfi/Tesouro</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Ranking CLP — Solidez Fiscal (2024): <span id="clp-pos" style="color:var(--color-negative);font-weight:700;"></span></div>
+        <table id="clp-table"></table>
+        <div class="fonte">Fonte: <a href="https://rankingdecompetitividade.org.br/estados/" target="_blank" rel="noopener">rankingdecompetitividade.org.br/estados/</a></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>Panorama Fiscal de Mato Grosso · Fontes: Siconfi/STN · Tesouro Nacional · CLP · SEFAZ-MT · <span id="foot-ref2"></span></footer>
+
+<script>
+// ── CONFIGURAÇÃO ─────────────────────────────────────────────────
+// data.json é gerado por scripts/build_data.py (combina APIs + manual.xlsx)
+var DATA_URL = 'data.json';
+
+// ── HELPERS ──────────────────────────────────────────────────────
+function bdg(n,t){return '<span class="badge badge-'+t+'">'+n+'</span>';}
+function fbi(v){v=parseFloat(String(v).replace(/\s/g,''));if(isNaN(v))return'';var s=v<0?'−':'';return s+'R$ '+(Math.abs(v)/1e9).toFixed(1)+' bi';}
+function clean(v){if(v===null||v===undefined)return'';return String(v).trim();}
+function num(v){return parseFloat(String(v).replace(/\s/g,'').replace(',','.'));}
+function cssVar(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim();}
+
+// Citação textual dos relatórios SICONFI (mirrors scripts/build_report.py)
+function citeRreo(period){
+  var p = String(period||'').split('/');
+  if (p.length !== 2) return 'RREO';
+  return 'RREO – '+p[1]+'º bimestre de '+p[0];
+}
+function citeRgf(period){
+  var p = String(period||'').split('/');
+  if (p.length !== 2) return 'RGF – Poder Executivo';
+  return 'RGF – Poder Executivo – '+p[1]+'º quadrimestre de '+p[0];
+}
+
+function setSources(meta){
+  var srcRreoClosed = citeRreo(meta && meta.rreo_closed_period);
+  var srcRgf = citeRgf(meta && meta.rgf_period);
+  function set(id, txt){ var el=document.getElementById(id); if(el) el.textContent='Fonte: '+txt; }
+  set('fonte-investimentos', srcRreoClosed + ', Anexo 01 (Balanço Orçamentário) — linha INVESTIMENTOS, coluna DESPESAS LIQUIDADAS ATÉ O BIMESTRE. RCL via ' + srcRgf + ', Anexo 01.');
+  set('fonte-caixa', srcRgf + ', Anexo 05 (Demonstrativo da Disponibilidade de Caixa) — linha TOTAL (IV) e TOTAL DOS RECURSOS NÃO VINCULADOS (I), coluna APÓS RPNP. Histórico: 3º quad de cada exercício.');
+  set('fonte-pessoal', srcRgf + ', Anexo 01 (Demonstrativo da Despesa com Pessoal) — DTP (VI), % sobre a RCL Ajustada.');
+}
+
+// ── RENDER FUNCTIONS ─────────────────────────────────────────────
+function renderKpis(rows) {
+  var labelMap = {
+    orcamento_df:'Orçamento de Mato Grosso',
+    investimento_rcl:'Investimento / RCL', capag:'Nota CAPAG',
+    caixa:'Caixa Líquido', beneficios:'Benefícios Tributários'
+  };
+  var g = document.getElementById('kpi-grid');
+
+  rows.forEach(function(r) {
+    var chave = clean(r.chave);
+    if (chave === 'fcdf') return;  // FCDF é exclusivo do DF — ignora se aparecer no JSON
+    var valor = clean(r.valor_bilhoes);
+    var sub   = clean(r.sub);
+    var cor   = clean(r.cor);
+    var label = labelMap[chave] || chave;
+    var tips = {
+      capag: 'A análise da capacidade de pagamento apura a situação fiscal dos Entes Subnacionais que querem contrair novos empréstimos com garantia da União. O intuito da Capag é apresentar de forma simples e transparente se um novo endividamento representa risco de crédito para o Tesouro Nacional.'
+    };
+    var rcl_tip = '<span class="has-tip">RCL<span class="tip">Receita Corrente Líquida</span></span>';
+    var labelHtml = tips[chave]
+      ? '<span class="has-tip">'+label+'<span class="tip">'+tips[chave]+'</span></span>'
+      : label.replace(/\bRCL\b/g, rcl_tip);
+    g.innerHTML += '<div class="kpi '+cor+'"><div class="kpi-label">'+labelHtml+'</div><div class="kpi-val cv-'+cor+'">'+valor+'</div><div class="kpi-sub">'+sub+'</div></div>';
+  });
+}
+
+function renderInvestimento(rows) {
+  // encontra ranking do MT (estado deste painel)
+  var mtRow = rows.find(function(r){return clean(r.estado)==='MT';});
+  if(mtRow) document.getElementById('inv-pos').textContent = num(mtRow.ranking)+'º lugar';
+
+  var labels = rows.map(function(r){
+    var estado = clean(r.estado);
+    var ranking = num(r.ranking);
+    if (estado==='MT' && estado!=='Média BR') return estado+' ('+ranking+'º)';
+    return estado;
+  });
+  var data = rows.map(function(r){ return +num(r.pct).toFixed(2); });
+  var colors = rows.map(function(r){
+    var estado = clean(r.estado);
+    if (estado === 'MT' && estado !== 'Média BR') return cssVar('--color-positive');  // verde-Brasil
+    if (clean(r.destaque) === 'green') return cssVar('--color-accent-dark');
+    return cssVar('--color-bg-soft');
+  });
+
+  document.getElementById('inv-chart-wrap').style.height = '320px';
+
+  new Chart(document.getElementById('chartInv'),{
+    type:'bar',
+    data:{labels:labels,datasets:[{data:data,backgroundColor:colors,borderRadius:3}]},
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{
+        legend:{display:false},
+        tooltip:{callbacks:{label:function(c){return c.parsed.y.toFixed(1)+'% da RCL';}}}
+      },
+      scales:{
+        x:{ticks:{font:{size:11},autoSkip:false,maxRotation:90,minRotation:60},grid:{display:false}},
+        y:{ticks:{callback:function(v){return v+'%';},font:{size:11}},grid:{color:cssVar('--color-border')}}
+      }
+    }
+  });
+}
+
+function renderCapag(rows, nota) {
+  document.getElementById('capag-nota').textContent = nota || 'C';
+  var t = document.getElementById('capag-table');
+  t.innerHTML = '<tr><th>Indicador</th><th>Nota</th><th>Valor</th><th>Situação</th></tr>';
+  rows.forEach(function(r) {
+    var b = clean(r.badge);
+    t.innerHTML += '<tr><td><span class="has-tip">'+clean(r.indicador)
+      +'<span class="tip">'+clean(r.conceito)+'</span></span></td>'
+      +'<td>'+bdg(clean(r.nota),b)+'</td>'
+      +'<td style="text-align:center">'+clean(r.valor)+'</td>'
+      +'<td style="font-size:12px;color:var(--color-text-muted)">'+clean(r.obs)+'</td></tr>';
+  });
+}
+
+function renderCapagHist(rows) {
+  var t = document.getElementById('capag-hist');
+  var anos = rows.map(function(r){return clean(r.ano);});
+  t.innerHTML = '<tr><th>Indicador</th>'+anos.map(function(a){return'<th style="text-align:center">'+a+'</th>';}).join('')+'</tr>';
+  ['endividamento','poupanca','liquidez','consolidado'].forEach(function(ind,i){
+    var labels=['Endividamento','Poup. Corrente','Liquidez','Consolidado'];
+    var cells = rows.map(function(r){
+      var n=clean(r[ind]); var b=n==='A'?'green':n==='B'?'amber':n==='C'?'red':'';
+      return'<td style="text-align:center">'+(b?bdg(n,b):n)+'</td>';
+    }).join('');
+    t.innerHTML += '<tr><td style="font-weight:600">'+labels[i]+'</td>'+cells+'</tr>';
+  });
+}
+
+function renderCaixaChart(rows) {
+  var anos  = rows.map(function(r){return clean(r.ano);});
+  var liq   = rows.map(function(r){return+(num(r.caixa_liquido)/1e9).toFixed(2);});
+  var naoV  = rows.map(function(r){return+(num(r.nao_vinculado)/1e9).toFixed(2);});
+  new Chart(document.getElementById('chartCaixa'),{
+    type:'bar',
+    data:{labels:anos,datasets:[
+      {label:'Caixa líquido',      data:liq, backgroundColor:cssVar('--color-bg-soft'),borderRadius:4},
+      {label:'Rec. não vinculados', data:naoV,backgroundColor:cssVar('--color-negative'),borderRadius:4},
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false}},
+      scales:{y:{ticks:{callback:function(v){return(v<0?'−':'')+'R$ '+Math.abs(v).toFixed(1)+'bi';},font:{size:11}},grid:{color:cssVar('--color-border')}},x:{ticks:{font:{size:11}}}}}
+  });
+}
+
+function renderPessoal(rows) {
+  var p = {};
+  rows.forEach(function(r){ p[clean(r.chave)] = num(r.valor); });
+  function esp(lim){return'R$ '+((lim-p.atual_pct)/100*p.rcl_bi).toFixed(1)+' bi';}
+  var t = document.getElementById('pessoal-table');
+  t.innerHTML = '<tr><th>Limite</th><th>% RCL</th><th>Espaço</th></tr>';
+  [
+    ['Atual',          p.atual_pct+'%',     '—',                  'hl-green', true],
+    ['Alerta',         p.alerta_pct+'%',    esp(p.alerta_pct),    'hl-amber', false],
+    ['Prudencial',     p.prudencial_pct+'%',esp(p.prudencial_pct),'',         false],
+    ['Máximo',         p.maximo_pct+'%',    esp(p.maximo_pct),    'hl-red',   false],
+  ].forEach(function(r){
+    t.innerHTML += '<tr class="'+r[3]+'"><td style="font-weight:'+(r[4]?700:400)+'">'+r[0]+'</td><td style="font-weight:'+(r[4]?700:400)+'">'+r[1]+'</td><td style="font-size:12px;color:var(--color-text-muted)">'+r[2]+'</td></tr>';
+  });
+}
+
+function renderCLP(rows) {
+  // Posição geral do MT no ranking (vem do _meta.clp_geral, com fallback)
+  var posEl = document.getElementById('clp-pos');
+  if (window.__clpPosGeral && posEl) posEl.textContent = window.__clpPosGeral;
+  var t = document.getElementById('clp-table');
+  t.innerHTML = '<tr><th>Indicador</th><th>Posição</th></tr>';
+  rows.forEach(function(r) {
+    var pos = num(r.posicao);
+    var b   = isNaN(pos) ? '' : (pos >= 20 ? 'red' : pos >= 10 ? 'amber' : 'green');
+    var posTxt = isNaN(pos) ? clean(r.posicao) : pos+'º';
+    t.innerHTML += '<tr><td><span class="has-tip">'+clean(r.indicador)
+      +'<span class="tip">'+clean(r.conceito)+'</span></span></td>'
+      +'<td style="text-align:center">'+(b ? bdg(posTxt,b) : posTxt)+'</td></tr>';
+  });
+}
+
+// ── INIT ─────────────────────────────────────────────────────────
+async function init() {
+  try {
+    var resp = await fetch(DATA_URL, {cache: 'no-store'});
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    var d = await resp.json();
+
+    // header reference: prefer the timestamp from build, fall back to today
+    var meta = d._meta || {};
+    var ref;
+    if (meta.updated_at) {
+      var dt = new Date(meta.updated_at);
+      ref = 'Atualização: ' + dt.toLocaleDateString('pt-BR',{day:'2-digit',month:'long',year:'numeric'});
+    } else {
+      var hoje = new Date();
+      ref = 'Atualização: ' + hoje.toLocaleDateString('pt-BR',{month:'long',year:'numeric'});
+    }
+    ['hdr-ref','foot-ref','foot-ref2'].forEach(function(id){
+      var el=document.getElementById(id); if(el) el.textContent=ref;
+    });
+
+    // posição geral do MT no ranking CLP (texto livre vindo do manual ou meta)
+    window.__clpPosGeral = (meta.clp_pos_geral || '');
+    setSources(meta);
+    renderKpis(d.kpis || []);
+    renderInvestimento(d.investimentos || []);
+    renderCapag(d.capag || [], meta.capag_nota_consolidada || '');
+    renderCapagHist(d.capag_historico || []);
+    renderCaixaChart(d.caixa || []);
+    renderPessoal(d.pessoal || []);
+    renderCLP(d.clp_ranking || []);
+
+    document.getElementById('loading').style.display='none';
+    document.getElementById('main').style.display='block';
+
+  } catch(e) {
+    document.getElementById('loading').innerHTML =
+      '<div style="background:var(--color-negative-bg);border:1px solid var(--color-negative);border-radius:var(--radius-input);padding:20px;max-width:500px;color:var(--color-negative);font-size:13px;">'
+      +'<strong>Erro ao carregar dados.</strong><br>Não foi possível ler <code>data.json</code>. Rode <code>python scripts/build_data.py</code> e suba o arquivo gerado.<br><br>'
+      +'<small style="color:var(--color-text-muted)">'+e.message+'</small></div>';
+    console.error(e);
+  }
+}
+
+// Nav scroll
+document.querySelectorAll('.section').forEach(function(s){
+  new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting)document.querySelectorAll('nav a').forEach(function(a){a.classList.toggle('active',a.getAttribute('href')==='#'+e.target.id);});});},{rootMargin:'-30% 0px -60% 0px'}).observe(s);
+});
+
+init();
+</script>
+</body>
+</html>

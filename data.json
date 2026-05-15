@@ -1,0 +1,413 @@
+{
+  "_meta": {
+    "uf": "MT",
+    "updated_at": "2026-05-15T08:47:28",
+    "rreo_current_period": "2026/1",
+    "rreo_closed_period": "2025/6",
+    "rgf_period": "2025/3",
+    "populacao_year": 2024,
+    "populacao_mt": 3836399,
+    "capag_nota_consolidada": "A+",
+    "clp_pos_geral": "1º (Solvência Fiscal)",
+    "raw_siconfi": {
+      "rreo_current": {
+        "orcamento_total_dotacao": 40792580503,
+        "investimento_liquidado": 199944417.61,
+        "receita_impostos_realizada": 3182355287.68
+      },
+      "rreo_closed": {
+        "orcamento_total_dotacao": 45962617273.75,
+        "investimento_liquidado": 4490360637.54,
+        "receita_impostos_realizada": 19015574410.61
+      },
+      "rgf_dtp": {
+        "rcl": 37257271565.12,
+        "rcl_ajustada": 37063711759.12,
+        "despesa_pessoal_total": null,
+        "pct_pessoal_rcl_ajustada": 36.28
+      },
+      "rgf_caixa": {
+        "caixa_liquido_total": 5489488850.36,
+        "caixa_liquido_nao_vinculado": 1638835023.38
+      }
+    },
+    "sources": {
+      "kpis": "manual",
+      "capag": "csv-local+manual(obs)",
+      "pessoal": "manual",
+      "clp_ranking": "manual",
+      "clp_meta": "manual",
+      "investimentos": "manual",
+      "capag_historico": "csv-local",
+      "kpi.orcamento_df": "siconfi-rreo-atual",
+      "kpi.investimento_rcl": "siconfi-rreo+rgf",
+      "kpi.capag": "csv-local",
+      "pessoal.atual_pct": "siconfi-rgf",
+      "pessoal.rcl_bi": "siconfi-rgf",
+      "kpi.caixa": "siconfi-rgf-anexo05",
+      "caixa": "siconfi-rgf-anexo05"
+    }
+  },
+  "kpis": [
+    {
+      "chave": "orcamento_df",
+      "valor_bilhoes": "R$ 40,8 bi",
+      "sub": "Dotação atualizada 2026 (RREO 1º bim)",
+      "cor": "blue"
+    },
+    {
+      "chave": "investimento_rcl",
+      "valor_bilhoes": "12,1%",
+      "sub": "7º lugar no Brasil",
+      "cor": "amber"
+    },
+    {
+      "chave": "capag",
+      "valor_bilhoes": "A+",
+      "sub": null,
+      "cor": "green"
+    },
+    {
+      "chave": "caixa",
+      "valor_bilhoes": "R$ 5,5 bi",
+      "sub": "Disponibilidade líquida — dez/2025",
+      "cor": "green"
+    },
+    {
+      "chave": "beneficios",
+      "valor_bilhoes": null,
+      "sub": "Preencher manual: total anual de renúncia tributária (SEFAZ-MT)",
+      "cor": "amber"
+    }
+  ],
+  "investimentos": [
+    {
+      "estado": "RN",
+      "pct": 3.1,
+      "ranking": 27,
+      "destaque": null
+    },
+    {
+      "estado": "RR",
+      "pct": 3.4,
+      "ranking": 26,
+      "destaque": null
+    },
+    {
+      "estado": "RO",
+      "pct": 3.6,
+      "ranking": 25,
+      "destaque": null
+    },
+    {
+      "estado": "RS",
+      "pct": 3.6,
+      "ranking": 24,
+      "destaque": null
+    },
+    {
+      "estado": "AM",
+      "pct": 4.3,
+      "ranking": 23,
+      "destaque": null
+    },
+    {
+      "estado": "SP",
+      "pct": 4.4,
+      "ranking": 22,
+      "destaque": null
+    },
+    {
+      "estado": "TO",
+      "pct": 4.6,
+      "ranking": 21,
+      "destaque": null
+    },
+    {
+      "estado": "DF",
+      "pct": 4.7,
+      "ranking": 20,
+      "destaque": null
+    },
+    {
+      "estado": "RJ",
+      "pct": 5.4,
+      "ranking": 19,
+      "destaque": null
+    },
+    {
+      "estado": "AC",
+      "pct": 5.5,
+      "ranking": 18,
+      "destaque": null
+    },
+    {
+      "estado": "MG",
+      "pct": 5.9,
+      "ranking": 17,
+      "destaque": null
+    },
+    {
+      "estado": "SE",
+      "pct": 6.5,
+      "ranking": 16,
+      "destaque": null
+    },
+    {
+      "estado": "AP",
+      "pct": 7.5,
+      "ranking": 15,
+      "destaque": null
+    },
+    {
+      "estado": "PR",
+      "pct": 8.4,
+      "ranking": 14,
+      "destaque": null
+    },
+    {
+      "estado": "PE",
+      "pct": 9.2,
+      "ranking": 13,
+      "destaque": null
+    },
+    {
+      "estado": "AL",
+      "pct": 9.4,
+      "ranking": 12,
+      "destaque": null
+    },
+    {
+      "estado": "SC",
+      "pct": 9.9,
+      "ranking": 11,
+      "destaque": null
+    },
+    {
+      "estado": "CE",
+      "pct": 10.5,
+      "ranking": 10,
+      "destaque": null
+    },
+    {
+      "estado": "BA",
+      "pct": 10.7,
+      "ranking": 9,
+      "destaque": null
+    },
+    {
+      "estado": "MS",
+      "pct": 11.2,
+      "ranking": 8,
+      "destaque": null
+    },
+    {
+      "estado": "MT",
+      "pct": 12.1,
+      "ranking": 7,
+      "destaque": "red"
+    },
+    {
+      "estado": "PB",
+      "pct": 12.1,
+      "ranking": 6,
+      "destaque": null
+    },
+    {
+      "estado": "GO",
+      "pct": 12.6,
+      "ranking": 5,
+      "destaque": null
+    },
+    {
+      "estado": "PA",
+      "pct": 13.3,
+      "ranking": 4,
+      "destaque": null
+    },
+    {
+      "estado": "MA",
+      "pct": 14,
+      "ranking": 3,
+      "destaque": null
+    },
+    {
+      "estado": "ES",
+      "pct": 14.8,
+      "ranking": 2,
+      "destaque": null
+    },
+    {
+      "estado": "PI",
+      "pct": 17,
+      "ranking": 1,
+      "destaque": null
+    },
+    {
+      "estado": "Média BR",
+      "pct": 8.43,
+      "ranking": null,
+      "destaque": "green"
+    }
+  ],
+  "caixa": [
+    {
+      "ano": "2021",
+      "caixa_liquido": 5908168503.77,
+      "nao_vinculado": 2786731144.81
+    },
+    {
+      "ano": "2022",
+      "caixa_liquido": 6316147405.11,
+      "nao_vinculado": 1396847439.78
+    },
+    {
+      "ano": "2023",
+      "caixa_liquido": 5263995115.32,
+      "nao_vinculado": 2292278730.61
+    },
+    {
+      "ano": "2024",
+      "caixa_liquido": 5337943472.94,
+      "nao_vinculado": 2029924777.76
+    },
+    {
+      "ano": "2025",
+      "caixa_liquido": 5489488850.36,
+      "nao_vinculado": 1638835023.38
+    }
+  ],
+  "capag": [
+    {
+      "indicador": "Endividamento (% da RCL)",
+      "nota": "A",
+      "badge": "green",
+      "valor": "15,55%",
+      "obs": "Para nota A: < 60%",
+      "conceito": "Mede a dívida consolidada do estado em relação à receita corrente líquida. Quanto menor, melhor. Abaixo de 60% da RCL = nota A."
+    },
+    {
+      "indicador": "Poupança Corrente (Despesa/Receita)",
+      "nota": "A",
+      "badge": "green",
+      "valor": "82,38%",
+      "obs": "Para nota B: < 95%",
+      "conceito": "Mede quanto das receitas correntes é consumido pelas despesas correntes. Acima de 95% significa que o estado gasta quase tudo que arrecada só para se manter, sem sobrar para investir."
+    },
+    {
+      "indicador": "Liquidez Relativa (Dívida/RCL)",
+      "nota": "A",
+      "badge": "green",
+      "valor": "9,63%",
+      "obs": "Para nota A: ≥ 5%",
+      "conceito": "Mede se o estado tem recursos disponíveis em caixa para honrar suas obrigações de curto prazo."
+    }
+  ],
+  "capag_historico": [
+    {
+      "ano": "2018",
+      "endividamento": "ND",
+      "poupanca": "ND",
+      "liquidez": "ND",
+      "consolidado": "C"
+    },
+    {
+      "ano": "2019",
+      "endividamento": "A",
+      "poupanca": "C",
+      "liquidez": "C",
+      "consolidado": "C"
+    },
+    {
+      "ano": "2020",
+      "endividamento": "A",
+      "poupanca": "B",
+      "liquidez": "C",
+      "consolidado": "C"
+    },
+    {
+      "ano": "2021",
+      "endividamento": "A",
+      "poupanca": "A",
+      "liquidez": "A",
+      "consolidado": "A"
+    },
+    {
+      "ano": "2022",
+      "endividamento": "A",
+      "poupanca": "A",
+      "liquidez": "A",
+      "consolidado": "A"
+    },
+    {
+      "ano": "2023",
+      "endividamento": "A",
+      "poupanca": "A",
+      "liquidez": "A",
+      "consolidado": "A"
+    },
+    {
+      "ano": "2024",
+      "endividamento": "A",
+      "poupanca": "A",
+      "liquidez": "A",
+      "consolidado": "A+"
+    },
+    {
+      "ano": "2025",
+      "endividamento": "A",
+      "poupanca": "A",
+      "liquidez": "A",
+      "consolidado": "A+"
+    }
+  ],
+  "pessoal": [
+    {
+      "chave": "atual_pct",
+      "valor": 36.28
+    },
+    {
+      "chave": "alerta_pct",
+      "valor": 44.1
+    },
+    {
+      "chave": "prudencial_pct",
+      "valor": 46.55
+    },
+    {
+      "chave": "maximo_pct",
+      "valor": 49
+    },
+    {
+      "chave": "rcl_bi",
+      "valor": 37.26
+    }
+  ],
+  "clp_ranking": [
+    {
+      "indicador": "Taxa de Investimentos",
+      "posicao": 3,
+      "conceito": "Investimento liquidado dividido pela receita corrente líquida."
+    },
+    {
+      "indicador": "Sucesso Planejamento Orçamentário",
+      "posicao": "ND",
+      "conceito": "Despesa liquidada pela despesa total atualizada (dotação orçamentária)."
+    },
+    {
+      "indicador": "Resultado Primário",
+      "posicao": "ND",
+      "conceito": "Diferença entre receita primária realizada e despesa primária empenhada no ano, dividida pelo PIB nominal do estado."
+    },
+    {
+      "indicador": "Índice de Liquidez",
+      "posicao": "ND",
+      "conceito": "Obrigações financeiras divididas pelo caixa bruto. Quanto maior o indicador, pior."
+    },
+    {
+      "indicador": "Regra de Ouro",
+      "posicao": 2,
+      "conceito": "Diferença entre despesas de capital empenhadas e receita de operações de crédito, dividida pela receita corrente líquida."
+    }
+  ]
+}
